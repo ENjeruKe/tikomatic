@@ -18,6 +18,6 @@ class LicenseCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln('TODO output contents of phar//LICENSE');
+        echo file_get_contents('LICENSE');
     }
 }

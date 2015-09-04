@@ -22,7 +22,17 @@ class UpdateCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $output->writeln('Update is currently broken, debug info follows');
         $manager = new Manager(Manifest::loadFile(self::MANIFEST_FILE));
-        $manager->update($this->getApplication()->getVersion(), true);
+
+        $output->writeln('Looking for updates...');
+
+        $currentVersion = $this->getApplication()->getVersion();
+
+        if ($manager->update($currentVersion, true)) {
+            $output->writeln('<info>Updated to latest version</info>');
+        } else {
+            $output->writeln('<comment>Already up-to-date.</comment>');
+        }
     }
 }
