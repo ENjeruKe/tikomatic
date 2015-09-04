@@ -1,8 +1,8 @@
 [
     {
         "name": "tikomatic.phar",
-        "sha1": "fbcded58df0ea838c17d56a5e3cdace56127d538",
-        "url": "http://mattketmo.github.io/cliph/downloads/my-cli-1.0.2.phar",
-        "version": "1.0.2"
+        "sha1": "2596f791c9dbe34b26269f7cabea3478032ad067",
+        "url": "http://jcutrer.com/tikomatic/downloads/tikomatic-1.0.3.phar",
+        "version": "1.0.3"
     }
 ]
