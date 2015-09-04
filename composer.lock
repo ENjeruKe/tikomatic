@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "fadbfec6271fb66001f9f1dcfc0d6b08",
+    "hash": "6bca2225124c229a0630070832f4a9d7",
     "packages": [
         {
             "name": "herrera-io/json",
