@@ -16,6 +16,6 @@
     ],
     "git-version": "package_version",
     "main": "src/index.php",
-    "output": "tikomatic.phar",
+    "output": "build/tikomatic.phar",
     "stub": true
 }
