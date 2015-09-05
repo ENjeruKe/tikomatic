@@ -2,9 +2,9 @@
 
 namespace Tikomatic\Command;
 
+use Symfony\Component\Console\Command\Command;
 use Herrera\Phar\Update\Manager;
 use Herrera\Phar\Update\Manifest;
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
