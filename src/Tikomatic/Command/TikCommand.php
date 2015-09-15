@@ -2,6 +2,7 @@
 
 namespace Tikomatic\Command;
 
+use Tikomatic\Registry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -14,49 +15,55 @@ class TikCommand extends Command
 {
     protected function configure()
     {
+        $registry = Registry::getInstance();
+        $translator = $registry->get('translator');
+
         $this
             ->addOption(
                 'conf',
                 'c',
                 InputOption::VALUE_REQUIRED,
-                'Path to ini file containing host,username,password'
+                $translator->trans('Path to ini file containing host,username,password')
             )
             ->addOption(
                 'host',
                 null,
                 InputOption::VALUE_REQUIRED,
-                'Hostname or IP Address'
+                $translator->trans('Hostname or IP Address')
             )
             ->addOption(
                 'username',
                 'u',
                 InputOption::VALUE_OPTIONAL,
-                'Login username'
+                $translator->trans('Login username')
             )
             ->addOption(
                 'password',
                 'p',
                 InputOption::VALUE_OPTIONAL,
-                'Login password'
+                $translator->trans('Login password')
             )
             ->addOption(
                 'port',
                 'P',
                 InputOption::VALUE_OPTIONAL,
-                'Port providing RouterOS API',
+                $translator->trans('Port providing RouterOS API'),
                 8728
             )
             ->addOption(
                 'ssl',
                 's',
                 InputOption::VALUE_NONE,
-                'Try to use SSL/TLS for the connection'
+                $translator->trans('Try to use SSL/TLS for the connection')
             )
         ;
     }
 
     protected function interact(InputInterface $input, OutputInterface $output)
     {
+        $registry = Registry::getInstance();
+        $translator = $registry->get('translator');
+
         //Load options from ini file
         $conf = $input->getOption('conf');
 
@@ -74,7 +81,7 @@ class TikCommand extends Command
                     $input->setOption('password', $iniconf['password'] );
                 }
             } else {
-                echo "File not found: $conf\n";
+                echo $translator->trans("File not found").": $conf" ."\n";
                 exit;
             }
 
@@ -84,12 +91,19 @@ class TikCommand extends Command
 
         //ask for host if not specified as option
         if ( !$host = $input->getOption('host') ) {
-            $input->setOption('host', $this->askQuestion($input, $output, "Hostname:"));
+            $input->setOption('host', $this->askQuestion($input, $output, $translator->trans("Hostname").':'));
         }
 
         //ask for username if not specified as option
         if ( !$host = $input->getOption('username') ) {
-            $input->setOption('username', $this->askQuestion($input, $output, "Username:"));
+            $input->setOption(
+                'username', 
+                $this->askQuestion(
+                    $input, 
+                    $output, 
+                    $translator->trans("Username").':'
+                )
+            );
         }
 
         //ask for password if not specified as option
@@ -102,8 +116,11 @@ class TikCommand extends Command
 
     protected function askConfirm($input, $output) 
     {
+        $registry = Registry::getInstance();
+        $translator = $registry->get('translator');
+
         $helper = $this->getHelper('question');
-        $question = new ConfirmationQuestion('Confirm Reboot?', false);
+        $question = new ConfirmationQuestion( $translator->trans('Confirm Reboot?'), false);
 
         if (!$helper->ask($input, $output, $question)) {
             return false;
@@ -121,9 +138,12 @@ class TikCommand extends Command
 
     protected function askPassword( $input, $output) 
     {
+        $registry = Registry::getInstance();
+        $translator = $registry->get('translator');
+
         $helper = $this->getHelper('question');
 
-        $question = new Question('Password:', null);
+        $question = new Question( $translator->trans('Password').':', null);
         //setHidden does not work with Phar
         //$question->setHidden(true);
         //$question->setHiddenFallback(false);

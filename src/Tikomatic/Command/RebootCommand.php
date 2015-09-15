@@ -2,6 +2,7 @@
 
 namespace Tikomatic\Command;
 
+use Tikomatic\Registry;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -13,10 +14,13 @@ class RebootCommand extends TikCommand
 {
     protected function configure()
     {
+        $registry = Registry::getInstance();
+        $translator = $registry->get('translator');
+
         parent::configure();
         $this
             ->setName('reboot')
-            ->setDescription('Reboot Remote Device')
+            ->setDescription($translator->trans('Reboot Remote Device'))
             ->addArgument(
                 'action',
                 InputArgument::IS_ARRAY,
@@ -50,7 +54,10 @@ class RebootCommand extends TikCommand
             case 'status': //status of scheduled reboot
                 break;
             case 'in': //delayed reboot, creates self deleting schedule
-                if ( empty($input->getArgument('action')[1]) ) { $output->writeln( "Time missing: i.e. reboot in 10m" ); exit; }
+                if ( empty($input->getArgument('action')[1]) ) { 
+                    $output->writeln( "Time missing: i.e. reboot in 10m" ); 
+                    exit; 
+                }
                 $output->writeln( "TODO reboot in " . $input->getArgument('action')[1] );
                 break;
             case 'cancel': //cancels scheduled reboot

@@ -1,7 +1,8 @@
 {
     "chmod": "0755",
     "directories": [
-        "src"
+        "src",
+        "locale"
     ],
     "files": [
         "LICENSE",
@@ -9,9 +10,9 @@
     ],
     "finder": [
         {
-            "name": "*.php",
+            "name": "*.*",
             "exclude": ["Tests", "build"],
-            "in": "vendor"
+            "in": ["vendor"]
         }
     ],
     "git-version": "package_version",

@@ -10,7 +10,9 @@
     "require": {
         "symfony/finder": "^3.0@dev",
         "symfony/console": "^3.0@dev",
-        "herrera-io/phar-update": "~1.0"
+        "herrera-io/phar-update": "~1.0",
+        "symfony/translation": "^3.0@dev",
+        "pear2/net_routeros": "*@alpha"
     },
     "autoload": {
         "psr-0": {

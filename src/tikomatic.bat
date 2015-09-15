@@ -1,3 +1,3 @@
 @ECHO OFF
-:: Windows Command Line Tool
+:: Windows Command Line Helper
 php %~dp0\tikomatic.phar %*

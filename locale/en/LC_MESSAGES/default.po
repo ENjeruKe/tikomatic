@@ -1,0 +1,45 @@
+# LANGUAGE translation for Tikomatic
+# Generated 2015-09-06T12:29:03+00:00 using extract2po.php
+# php util\extract2po.php ./
+
+
+# Referenced in Tikomatic\Command\RebootCommand.php
+msgid "Reboot Remote Device"
+msgstr "Reboot Remote Device"
+
+# Referenced in Tikomatic\Command\TikCommand.php
+msgid "Hostname or IP Address"
+msgstr "Hostname or IP Address"
+
+# Referenced in Tikomatic\Command\TikCommand.php
+msgid "Login username"
+msgstr "Login username"
+
+# Referenced in Tikomatic\Command\TikCommand.php
+msgid "Login password"
+msgstr "Login password"
+
+# Referenced in Tikomatic\Command\TikCommand.php
+msgid "Port providing RouterOS API"
+msgstr "Port providing RouterOS API"
+
+# Referenced in Tikomatic\Command\TikCommand.php
+msgid "File not found"
+msgstr "File not found"
+
+# Referenced in Tikomatic\Command\TikCommand.php
+msgid "Hostname"
+msgstr "Hostname"
+
+# Referenced in Tikomatic\Command\TikCommand.php
+msgid "Username"
+msgstr "Username"
+
+# Referenced in Tikomatic\Command\TikCommand.php
+msgid "Password"
+msgstr "Password"
+
+# Referenced in Tikomatic\Command\UptimeCommand.php
+msgid "Get uptime of remote device"
+msgstr "Get uptime of remote device"
+

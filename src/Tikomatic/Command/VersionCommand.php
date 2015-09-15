@@ -7,7 +7,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use PEAR2\Net\RouterOS;
 
-class UptimeCommand extends TikCommand
+class VersionCommand extends TikCommand
 {
     protected function configure()
     {
@@ -16,8 +16,8 @@ class UptimeCommand extends TikCommand
         
         parent::configure();
         $this
-            ->setName('sys:res:uptime')
-            ->setDescription($translator->trans('Get uptime of remote device'))
+            ->setName('sys:version')
+            ->setDescription($translator->trans('Get ROS version of remote device'))
         ;
     }
 
@@ -35,11 +35,11 @@ class UptimeCommand extends TikCommand
             $output->writeln( "password=".$password );
         }
 
-        $output->writeln( $this->getUptime($host, $username, $password) );
+        $output->writeln( $this->getVersion($host, $username, $password) );
 
     }
 
-    protected function getUptime($host, $username, $password) 
+    protected function getVersion($host, $username, $password) 
     {
 
         try {
@@ -53,7 +53,7 @@ class UptimeCommand extends TikCommand
 
         foreach ($responses as $response) {
             if ($response->getType() === RouterOS\Response::TYPE_DATA) {
-                return $response->getProperty('uptime');
+                return $response->getProperty('version');
             }
         }
         //
