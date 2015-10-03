@@ -125,16 +125,16 @@
         },
         {
             "name": "justinrainbow/json-schema",
-            "version": "dev-master",
+            "version": "1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/justinrainbow/json-schema.git",
-                "reference": "34ca930d9fbfb439ae8d3b87ca046b914e190295"
+                "reference": "a4bee9f4b344b66e0a0d96c7afae1e92edf385fe"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/justinrainbow/json-schema/zipball/a4bee9f4b344b66e0a0d96c7afae1e92edf385fe",
-                "reference": "34ca930d9fbfb439ae8d3b87ca046b914e190295",
+                "reference": "a4bee9f4b344b66e0a0d96c7afae1e92edf385fe",
                 "shasum": ""
             },
             "require": {
@@ -187,7 +187,7 @@
                 "json",
                 "schema"
             ],
-            "time": "2015-07-14 16:34:54"
+            "time": "2015-09-08 22:28:04"
         },
         {
             "name": "kherge/version",
@@ -407,13 +407,13 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/Console.git",
-                "reference": "81976a69e1c0ca0ef759706ac5d59c4e1e99a4a8"
+                "url": "https://github.com/symfony/console.git",
+                "reference": "6f40fe98676b7eed54a3d0bc2770aaaacdad2b1c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Console/zipball/06b56e0ef25fd9c4b3ab25941678707c13b48abd",
-                "reference": "81976a69e1c0ca0ef759706ac5d59c4e1e99a4a8",
+                "url": "https://api.github.com/repos/symfony/console/zipball/6f40fe98676b7eed54a3d0bc2770aaaacdad2b1c",
+                "reference": "6f40fe98676b7eed54a3d0bc2770aaaacdad2b1c",
                 "shasum": ""
             },
             "require": {
@@ -457,69 +457,20 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2015-09-03 11:51:32"
-        },
-        {
-            "name": "symfony/filesystem",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/Filesystem.git",
-                "reference": "00e0462cfe48c7fdd142d0867e827cb0d17e4e23"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Filesystem/zipball/062d0c4b01cfd8ab94957ddf2e9598dcbae2b56a",
-                "reference": "00e0462cfe48c7fdd142d0867e827cb0d17e4e23",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.5.9"
-            },
-            "require-dev": {
-                "symfony/phpunit-bridge": "~2.8|~3.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "3.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\Filesystem\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony Filesystem Component",
-            "homepage": "https://symfony.com",
-            "time": "2015-08-27 07:55:57"
+            "time": "2015-10-02 14:58:35"
         },
         {
             "name": "symfony/finder",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/Finder.git",
-                "reference": "0b7491ac2f12058fda021a3a1542ea42f170ca65"
+                "url": "https://github.com/symfony/finder.git",
+                "reference": "123f461541a55cb053a90082283447cb22f85f7c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Finder/zipball/0b7491ac2f12058fda021a3a1542ea42f170ca65",
-                "reference": "0b7491ac2f12058fda021a3a1542ea42f170ca65",
+                "url": "https://api.github.com/repos/symfony/finder/zipball/123f461541a55cb053a90082283447cb22f85f7c",
+                "reference": "123f461541a55cb053a90082283447cb22f85f7c",
                 "shasum": ""
             },
             "require": {
@@ -555,20 +506,20 @@
             ],
             "description": "Symfony Finder Component",
             "homepage": "https://symfony.com",
-            "time": "2015-08-27 07:55:57"
+            "time": "2015-09-30 09:18:13"
         },
         {
             "name": "symfony/translation",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/symfony/Translation.git",
-                "reference": "898d1d536e30f691d29aa64b5946026097b68dfe"
+                "url": "https://github.com/symfony/translation.git",
+                "reference": "d3926d01dd4d9c0468fef65ba90c244a28e8ac1a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Translation/zipball/650c74618ff4c939f219d3ea29f95aefa6225362",
-                "reference": "898d1d536e30f691d29aa64b5946026097b68dfe",
+                "url": "https://api.github.com/repos/symfony/translation/zipball/d3926d01dd4d9c0468fef65ba90c244a28e8ac1a",
+                "reference": "d3926d01dd4d9c0468fef65ba90c244a28e8ac1a",
                 "shasum": ""
             },
             "require": {
@@ -616,7 +567,7 @@
             ],
             "description": "Symfony Translation Component",
             "homepage": "https://symfony.com",
-            "time": "2015-09-03 11:51:32"
+            "time": "2015-09-29 14:08:28"
         }
     ],
     "packages-dev": [],

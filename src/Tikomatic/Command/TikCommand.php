@@ -54,7 +54,13 @@ class TikCommand extends Command
                 'ssl',
                 's',
                 InputOption::VALUE_NONE,
-                $translator->trans('Try to use SSL/TLS for the connection')
+                $translator->trans('Connect to API using SSL/TLS')
+            )
+            ->addOption(
+                    'format',
+                    'f',
+                    InputOption::VALUE_REQUIRED,
+                    $translator->trans('Output Format (*table,xml,json,csv,tsv)')
             )
         ;
     }

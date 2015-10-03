@@ -19,7 +19,7 @@ class RebootCommand extends TikCommand
 
         parent::configure();
         $this
-            ->setName('reboot')
+            ->setName('sys:reboot')
             ->setDescription($translator->trans('Reboot Remote Device'))
             ->addArgument(
                 'action',
