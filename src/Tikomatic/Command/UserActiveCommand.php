@@ -19,7 +19,7 @@ class UserActiveCommand extends TikCommand
         parent::configure();
         $this
             ->setName('user:active')
-            ->setDescription($translator->trans('Get list of active users on remote device'))
+            ->setDescription($translator->trans('Get list of active users'))
         ;
     }
 
@@ -37,19 +37,12 @@ class UserActiveCommand extends TikCommand
             $output->writeln( "password=".$password );
         }
 
-        $data = $this->getResources($host, $username, $password);
-        //print_r( $data );
-        //$output->writeln( $response );
-        $table = new Table($output);
-        $table
-            ->setHeaders(array('id','when','name', 'address', 'via', 'group', 'radius'))
-            ->setRows($data)
-        ;
-        $table->render();
+        $data = $this->getUserActive($host, $username, $password);
+        $this->outFormatter( $input, $output, $data );
 
     }
 
-    protected function getResources($host, $username, $password) 
+    protected function getUserActive($host, $username, $password) 
     {
 
         try {

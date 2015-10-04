@@ -17,7 +17,7 @@ class UserCommand extends TikCommand
         parent::configure();
         $this
             ->setName('user')
-            ->setDescription($translator->trans('Create/Read/Update/Delete users on remote device'))
+            ->setDescription($translator->trans('Create/Read/Update/Delete users'))
         ;
     }
 

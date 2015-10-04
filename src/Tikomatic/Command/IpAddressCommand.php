@@ -5,6 +5,7 @@ namespace Tikomatic\Command;
 use Tikomatic\Registry;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Helper\Table;
 use PEAR2\Net\RouterOS;
@@ -20,6 +21,11 @@ class IpAddressCommand extends TikCommand
         $this
             ->setName('ip:address')
             ->setDescription($translator->trans('Work with /ip address(es)'))
+            ->addArgument(
+                'action',
+                InputArgument::IS_ARRAY,
+                "enable | disable | add | remove"
+            )
         ;
     }
 
@@ -38,50 +44,9 @@ class IpAddressCommand extends TikCommand
         }
 
         $data = $this->getIpAddress($host, $username, $password);
-        switch ( $input->getOption('format') ) {
-            case 'csv':
-                $this->outCsv( $data );
-                break;
-            case 'json':
-                $this->outJson( $data );
-                break;
-            case 'xml':
-                $this->outXml( $data );
-                break;
-            default:
-                $this->outTable( $input, $output, $data );
-        }
 
-    }
+        $this->outFormatter( $input, $output, $data );
 
-    protected function outTable( InputInterface $input, OutputInterface $output, $data ) {
-        $table = new Table($output);
-        $table
-            ->setHeaders(array_keys($data[0]))
-            ->setRows($data)
-        ;
-        $table->render();
-    }
-
-    protected function outJson( $data ) {
-        echo json_encode($data);
-    }
-
-    protected function outCsv( $data ) {
-
-        $out = fopen('php://output', 'w');
-        fputcsv($out, array_keys($data[0]));
-        foreach ($data as $item) {
-            fputcsv($out, $item);
-        }
-        fclose($out);
-    }
-
-    protected function outXml($data) {
-        $wrap = [ 'ipaddress' => $data ];
-        $xml = new \SimpleXMLElement('<tikomatic/>');
-        array_walk_recursive($wrap, array ($xml, 'addChild'));
-        print $xml->asXML();
     }
 
     protected function getIpAddress($host, $username, $password) 

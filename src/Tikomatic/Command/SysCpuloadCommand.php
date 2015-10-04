@@ -7,7 +7,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use PEAR2\Net\RouterOS;
 
-class CpuloadCommand extends TikCommand
+class SysCpuloadCommand extends TikCommand
 {
     protected function configure()
     {

@@ -5,9 +5,11 @@ namespace Tikomatic\Command;
 use Tikomatic\Registry;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Helper\Table;
 use PEAR2\Net\RouterOS;
 
-class VersionCommand extends TikCommand
+
+class SysHistoryCommand extends TikCommand
 {
     protected function configure()
     {
@@ -16,8 +18,8 @@ class VersionCommand extends TikCommand
         
         parent::configure();
         $this
-            ->setName('sys:version')
-            ->setDescription($translator->trans('Get ROS version of remote device'))
+            ->setName('sys:history')
+            ->setDescription($translator->trans('Print configuration change history'))
         ;
     }
 
@@ -35,11 +37,12 @@ class VersionCommand extends TikCommand
             $output->writeln( "password=".$password );
         }
 
-        $output->writeln( $this->getVersion($host, $username, $password) );
+        $data = $this->getSysHistory($host, $username, $password);
+        $this->outFormatter( $input, $output, $data );
 
     }
 
-    protected function getVersion($host, $username, $password) 
+    protected function getSysHistory($host, $username, $password) 
     {
 
         try {
@@ -49,13 +52,21 @@ class VersionCommand extends TikCommand
             //Inspect $e if you want to know details about the failure.
         }
 
-        $responses = $client->sendSync(new RouterOS\Request('/system/resource/print'));
+        $responses = $client->sendSync(new RouterOS\Request('/system/history/print'));
 
+        $data = [];
+        $count = 0;
         foreach ($responses as $response) {
+            
             if ($response->getType() === RouterOS\Response::TYPE_DATA) {
-                return $response->getProperty('version');
+                foreach ($response as $name => $value) {
+                    $data[$count][$name] = $value;
+                }
             }
+            $count++;
         }
+
+        return $data;
         //
     }
 

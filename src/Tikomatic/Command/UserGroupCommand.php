@@ -17,7 +17,7 @@ class UserGroupCommand extends TikCommand
         parent::configure();
         $this
             ->setName('user:group')
-            ->setDescription($translator->trans('Create/Read/Update/Delete user groups on remote device'))
+            ->setDescription($translator->trans('Create/Read/Update/Delete user groups'))
         ;
     }
 

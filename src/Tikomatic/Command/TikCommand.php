@@ -10,6 +10,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
+use Symfony\Component\Console\Helper\Table;
 
 class TikCommand extends Command
 {
@@ -118,6 +119,53 @@ class TikCommand extends Command
             $input->setOption('password', $password);
         }
 
+    }
+
+    protected function outFormatter( InputInterface $input, OutputInterface $output, $data ) {
+        switch ( $input->getOption('format') ) {
+            case 'csv':
+                $this->outCsv( $input, $output, $data );
+                break;
+            case 'json':
+                $this->outJson( $input, $output, $data );
+                break;
+            case 'xml':
+                $this->outXml( $input, $output, $data );
+                break;
+            case 'table':
+            default:
+                $this->outTable( $input, $output, $data );
+        }
+    }
+
+    protected function outTable( InputInterface $input, OutputInterface $output, $data ) {
+        $table = new Table($output);
+        $table
+            ->setHeaders(array_keys($data[0]))
+            ->setRows($data)
+        ;
+        $table->render();
+    }
+
+    protected function outJson( InputInterface $input, OutputInterface $output, $data ) {
+        echo json_encode($data);
+    }
+
+    protected function outCsv( InputInterface $input, OutputInterface $output, $data ) {
+
+        $out = fopen('php://output', 'w');
+        fputcsv($out, array_keys($data[0]));
+        foreach ($data as $item) {
+            fputcsv($out, $item);
+        }
+        fclose($out);
+    }
+
+    protected function outXml( InputInterface $input, OutputInterface $output, $data ) {
+        $wrap = [ 'ipaddress' => $data ];
+        $xml = new \SimpleXMLElement('<tikomatic/>');
+        array_walk_recursive($wrap, array ($xml, 'addChild'));
+        print $xml->asXML();
     }
 
     protected function askConfirm($input, $output) 

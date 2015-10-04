@@ -3,14 +3,15 @@
 namespace Tikomatic\Command;
 
 use Tikomatic\Registry;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
+use Symfony\Component\Console\Helper\Table;
 
-class RebootCommand extends TikCommand
+class SysRebootCommand extends TikCommand
 {
     protected function configure()
     {
@@ -20,7 +21,7 @@ class RebootCommand extends TikCommand
         parent::configure();
         $this
             ->setName('sys:reboot')
-            ->setDescription($translator->trans('Reboot Remote Device'))
+            ->setDescription($translator->trans('Reboot Router'))
             ->addArgument(
                 'action',
                 InputArgument::IS_ARRAY,

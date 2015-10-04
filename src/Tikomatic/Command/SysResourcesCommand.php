@@ -7,7 +7,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use PEAR2\Net\RouterOS;
 
-class UserSshkeysPrivateCommand extends TikCommand
+class SysResourcesCommand extends TikCommand
 {
     protected function configure()
     {
@@ -16,8 +16,8 @@ class UserSshkeysPrivateCommand extends TikCommand
         
         parent::configure();
         $this
-            ->setName('user:ssh-keys:private')
-            ->setDescription($translator->trans('Get list of user private ssh keys'))
+            ->setName('sys:res')
+            ->setDescription($translator->trans('Get System/Resource info'))
         ;
     }
 
@@ -51,18 +51,15 @@ class UserSshkeysPrivateCommand extends TikCommand
             //Inspect $e if you want to know details about the failure.
         }
 
-        $responses = $client->sendSync(new RouterOS\Request('/user/ssh-keys/private/print'));
+        $responses = $client->sendSync(new RouterOS\Request('/system/resource/print'));
 
         $data = [];
-        $count = 0;
         foreach ($responses as $response) {
-            
             if ($response->getType() === RouterOS\Response::TYPE_DATA) {
                 foreach ($response as $name => $value) {
-                    $data[$count][$name] = $value;
+                    $data[$name] = $value;
                 }
             }
-            $count++;
         }
 
         return $data;

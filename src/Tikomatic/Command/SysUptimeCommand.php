@@ -7,7 +7,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use PEAR2\Net\RouterOS;
 
-class UserSshkeysPrivateCommand extends TikCommand
+class SysUptimeCommand extends TikCommand
 {
     protected function configure()
     {
@@ -16,8 +16,8 @@ class UserSshkeysPrivateCommand extends TikCommand
         
         parent::configure();
         $this
-            ->setName('user:ssh-keys:private')
-            ->setDescription($translator->trans('Get list of user private ssh keys'))
+            ->setName('sys:uptime')
+            ->setDescription($translator->trans('Get device uptime'))
         ;
     }
 
@@ -35,13 +35,11 @@ class UserSshkeysPrivateCommand extends TikCommand
             $output->writeln( "password=".$password );
         }
 
-        $data = $this->getResources($host, $username, $password);
-        print_r( $data );
-        //$output->writeln( $response );
+        $output->writeln( $this->getUptime($host, $username, $password) );
 
     }
 
-    protected function getResources($host, $username, $password) 
+    protected function getUptime($host, $username, $password) 
     {
 
         try {
@@ -51,21 +49,13 @@ class UserSshkeysPrivateCommand extends TikCommand
             //Inspect $e if you want to know details about the failure.
         }
 
-        $responses = $client->sendSync(new RouterOS\Request('/user/ssh-keys/private/print'));
+        $responses = $client->sendSync(new RouterOS\Request('/system/resource/print'));
 
-        $data = [];
-        $count = 0;
         foreach ($responses as $response) {
-            
             if ($response->getType() === RouterOS\Response::TYPE_DATA) {
-                foreach ($response as $name => $value) {
-                    $data[$count][$name] = $value;
-                }
+                return $response->getProperty('uptime');
             }
-            $count++;
         }
-
-        return $data;
         //
     }
 

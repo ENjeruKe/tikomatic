@@ -5,9 +5,11 @@ namespace Tikomatic\Command;
 use Tikomatic\Registry;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Helper\Table;
 use PEAR2\Net\RouterOS;
 
-class UptimeCommand extends TikCommand
+
+class IpFwConnectionCommand extends TikCommand
 {
     protected function configure()
     {
@@ -16,8 +18,8 @@ class UptimeCommand extends TikCommand
         
         parent::configure();
         $this
-            ->setName('sys:res:uptime')
-            ->setDescription($translator->trans('Get uptime of remote device'))
+            ->setName('ip:fw:connection')
+            ->setDescription($translator->trans('Print active firewall connections'))
         ;
     }
 
@@ -35,11 +37,12 @@ class UptimeCommand extends TikCommand
             $output->writeln( "password=".$password );
         }
 
-        $output->writeln( $this->getUptime($host, $username, $password) );
+        $data = $this->getIpFwConnection($host, $username, $password);
+        $this->outFormatter( $input, $output, $data );
 
     }
 
-    protected function getUptime($host, $username, $password) 
+    protected function getIpFwConnection($host, $username, $password) 
     {
 
         try {
@@ -49,13 +52,21 @@ class UptimeCommand extends TikCommand
             //Inspect $e if you want to know details about the failure.
         }
 
-        $responses = $client->sendSync(new RouterOS\Request('/system/resource/print'));
+        $responses = $client->sendSync(new RouterOS\Request('/ip/firewall/connection/print'));
 
+        $data = [];
+        $count = 0;
         foreach ($responses as $response) {
+            
             if ($response->getType() === RouterOS\Response::TYPE_DATA) {
-                return $response->getProperty('uptime');
+                foreach ($response as $name => $value) {
+                    $data[$count][$name] = $value;
+                }
             }
+            $count++;
         }
+
+        return $data;
         //
     }
 

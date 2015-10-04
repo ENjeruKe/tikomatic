@@ -7,7 +7,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use PEAR2\Net\RouterOS;
 
-class ResourcesCommand extends TikCommand
+class SysVersionCommand extends TikCommand
 {
     protected function configure()
     {
@@ -16,8 +16,8 @@ class ResourcesCommand extends TikCommand
         
         parent::configure();
         $this
-            ->setName('sys:res')
-            ->setDescription($translator->trans('Get System/Resource info from remote device'))
+            ->setName('sys:version')
+            ->setDescription($translator->trans('Get RouterOS software version'))
         ;
     }
 
@@ -35,13 +35,11 @@ class ResourcesCommand extends TikCommand
             $output->writeln( "password=".$password );
         }
 
-        $data = $this->getResources($host, $username, $password);
-        print_r( $data );
-        //$output->writeln( $response );
+        $output->writeln( $this->getVersion($host, $username, $password) );
 
     }
 
-    protected function getResources($host, $username, $password) 
+    protected function getVersion($host, $username, $password) 
     {
 
         try {
@@ -53,16 +51,11 @@ class ResourcesCommand extends TikCommand
 
         $responses = $client->sendSync(new RouterOS\Request('/system/resource/print'));
 
-        $data = [];
         foreach ($responses as $response) {
             if ($response->getType() === RouterOS\Response::TYPE_DATA) {
-                foreach ($response as $name => $value) {
-                    $data[$name] = $value;
-                }
+                return $response->getProperty('version');
             }
         }
-
-        return $data;
         //
     }
 

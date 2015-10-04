@@ -17,7 +17,7 @@ class UserSshkeysCommand extends TikCommand
         parent::configure();
         $this
             ->setName('user:ssh-keys')
-            ->setDescription($translator->trans('Get list of user ssh keys on remote device'))
+            ->setDescription($translator->trans('Get list of user ssh keys'))
         ;
     }
 
