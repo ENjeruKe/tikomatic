@@ -61,7 +61,7 @@ class TikCommand extends Command
                     'format',
                     'f',
                     InputOption::VALUE_REQUIRED,
-                    $translator->trans('Output Format (*table,xml,json,csv,tsv)')
+                    $translator->trans('Output Format (*table,raw,xml,json,csv,tsv)')
             )
         ;
     }
@@ -121,6 +121,21 @@ class TikCommand extends Command
 
     }
 
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+
+        $host = $input->getOption('host');
+        $username = $input->getOption('username');
+        $password = $input->getOption('password');
+
+        //Debug: print received options
+        if ($output->isDebug()) {
+            $output->writeln( "host=".$host );
+            $output->writeln( "username=".$username );
+            $output->writeln( "password=".$password );
+        }
+    }
+
     protected function outFormatter( InputInterface $input, OutputInterface $output, $data ) {
         switch ( $input->getOption('format') ) {
             case 'csv':
@@ -132,6 +147,9 @@ class TikCommand extends Command
             case 'xml':
                 $this->outXml( $input, $output, $data );
                 break;
+            case 'raw':
+                $this->outRaw( $input, $output, $data );
+                break;
             case 'table':
             default:
                 $this->outTable( $input, $output, $data );
@@ -139,12 +157,47 @@ class TikCommand extends Command
     }
 
     protected function outTable( InputInterface $input, OutputInterface $output, $data ) {
+
         $table = new Table($output);
-        $table
-            ->setHeaders(array_keys($data[0]))
-            ->setRows($data)
-        ;
+
+        if ($this->arrayDepth($data ) > 1 ) {
+            //Output rows of data
+            $table
+                ->setHeaders(array_keys($data[0]))
+                ->setRows($data)
+            ;
+        } else {
+            //Output key/pair table
+            $kpdata = [];
+            $count = 0;
+            foreach ( $data as $key=>$val) {
+                $kpdata[$count][] = $key;
+                $kpdata[$count][] = $val;
+                $count++;
+            }
+            $table
+                ->setHeaders(['key','value'])
+                ->setRows($kpdata)
+            ;
+        }
         $table->render();
+
+    }
+
+
+    protected function outRaw( InputInterface $input, OutputInterface $output, $data ) {
+
+        if ($this->arrayDepth($data ) > 1 ) {
+            
+            $output->writeln( "Error: cannot output resultset as raw" );
+        } else {
+ 
+            foreach ( $data as $key=>$val) {
+                $output->writeln( $key.': ' . $val  );
+            }
+        }
+
+
     }
 
     protected function outJson( InputInterface $input, OutputInterface $output, $data ) {
@@ -153,18 +206,30 @@ class TikCommand extends Command
 
     protected function outCsv( InputInterface $input, OutputInterface $output, $data ) {
 
-        $out = fopen('php://output', 'w');
-        fputcsv($out, array_keys($data[0]));
-        foreach ($data as $item) {
-            fputcsv($out, $item);
+        if ($this->arrayDepth($data ) > 1 ) {
+            $out = fopen('php://output', 'w');
+            fputcsv($out, array_keys($data[0]));
+            foreach ($data as $item) {
+                fputcsv($out, $item);
+            }
+            fclose($out);
+        } else {
+            $out = fopen('php://output', 'w');
+            fputcsv($out, array_keys($data));
+            fputcsv($out, $data);
+            fclose($out);
         }
-        fclose($out);
+
+
     }
 
     protected function outXml( InputInterface $input, OutputInterface $output, $data ) {
-        $wrap = [ 'ipaddress' => $data ];
+        if ($this->arrayDepth($data ) == 1 ) {
+            $data = array_flip($data);
+        }
+
         $xml = new \SimpleXMLElement('<tikomatic/>');
-        array_walk_recursive($wrap, array ($xml, 'addChild'));
+        array_walk_recursive($data, array ($xml, 'addChild'));
         print $xml->asXML();
     }
 
@@ -202,5 +267,22 @@ class TikCommand extends Command
         //$question->setHidden(true);
         //$question->setHiddenFallback(false);
         return $helper->ask($input, $output, $question);  
+    }
+
+    private function arrayDepth($array) {
+        $max_indentation = 1;
+
+        $array_str = print_r($array, true);
+        $lines = explode("\n", $array_str);
+
+        foreach ($lines as $line) {
+            $indentation = (strlen($line) - strlen(ltrim($line))) / 4;
+
+            if ($indentation > $max_indentation) {
+                $max_indentation = $indentation;
+            }
+        }
+
+        return (int)ceil(($max_indentation - 1) / 2) + 1;
     }
 }

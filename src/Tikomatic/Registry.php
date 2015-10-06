@@ -47,7 +47,11 @@ final class Registry
      */
     public function get($key)
     {
-            return $this->_map[$key];
+        if (!array_key_exists($key, $this->_map)) {
+                throw new \DomainException('Object not found');
+        }
+        return $this->_map[$key];
+
     }
     
     /**

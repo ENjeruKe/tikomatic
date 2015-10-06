@@ -24,16 +24,7 @@ class ExportCommand extends TikCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
 
-        $host = $input->getOption('host');
-        $username = $input->getOption('username');
-        $password = $input->getOption('password');
-
-        //Debug: print received options
-        if ($output->isDebug()) {
-            $output->writeln( "host=".$host );
-            $output->writeln( "username=".$username );
-            $output->writeln( "password=".$password );
-        }
+        parent::execute($input, $output);
 
         $data = $this->getResources($host, $username, $password);
         print_r( $data );

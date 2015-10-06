@@ -36,8 +36,7 @@ class SysResourcesCommand extends TikCommand
         }
 
         $data = $this->getResources($host, $username, $password);
-        print_r( $data );
-        //$output->writeln( $response );
+        $this->outFormatter( $input, $output, $data );
 
     }
 

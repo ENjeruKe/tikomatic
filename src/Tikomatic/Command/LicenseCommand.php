@@ -18,6 +18,7 @@ class LicenseCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        echo file_get_contents('LICENSE');
+        $license = file_get_contents(APP_BASEPATH . '/../LICENSE');
+        $output->writeln( $license );
     }
 }

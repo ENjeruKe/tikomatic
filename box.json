@@ -11,7 +11,17 @@
     "finder": [
         {
             "name": "*.*",
-            "exclude": ["Tests", "build"],
+            "exclude": [
+            	"Tests", 
+            	"tests", 
+            	"build",
+            	"phpunit", 
+            	"phpspec",
+            	"phpdocumentor",
+            	"sebastian",
+            	"doctrine",
+            	"mockery"
+            ],
             "in": ["vendor"]
         }
     ],

@@ -14,6 +14,10 @@
         "symfony/translation": "^3.0@dev",
         "pear2/net_routeros": "*@alpha"
     },
+    "require-dev": {
+        "mockery/mockery": "^0.9.4",
+        "phpunit/phpunit": "^4.8"
+    },
     "autoload": {
         "psr-0": {
             "Tikomatic": "src"

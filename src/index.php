@@ -1,10 +1,5 @@
 <?php
-define('APP_BASEPATH', __DIR__ );
-
-require_once __DIR__.'/../vendor/autoload.php';
-require_once 'config.php';
-require_once 'i18n.php';
-
+require_once 'bootstrap.php';
 
 use Tikomatic\Command;
 use Tikomatic\Registry;
@@ -15,6 +10,7 @@ use Symfony\Component\Console\Application;
 //Create Application
 $application = new Application('Tikomatic', '@package_version@');
 
+// /export
 $application->add(new Command\ExportCommand());
 
 // /user
